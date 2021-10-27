@@ -62,7 +62,7 @@ def get_longest_arithmetic_progression(lst):
         for y in range(x, len(lst)):
             if progresie_aritmetica(lst[x:y+1]) and len(lst[x:y+1]) > lungime_rez:
                 rez = lst[x:y+1]
-                lungime_rez = (lst[x:y+1])
+                lungime_rez = len(lst[x:y+1])
     return rez
 
 def test_get_longest_arithmetic_progression():
@@ -70,6 +70,33 @@ def test_get_longest_arithmetic_progression():
     assert get_longest_arithmetic_progression([45, 6, 15, 20, 25, 14]) == [15, 20, 25]
 
 test_get_longest_arithmetic_progression()
+
+import math
+def get_longest_all_perfect_squares(lst):
+    '''
+    1. Toate numerele sunt patrate perfecte.
+    :param lst: lista de numere intregi
+    :return: rez ce reprezinta cea mai lunga subsecventa in care toate numerele sunt patrate perfecte
+    '''
+
+    rez = []
+    temp = []
+    for x in lst:
+        if math.sqrt(x) == int(math.sqrt(x)):
+            temp.append(x)
+        else:
+            if (len(temp) > len(rez)):
+                rez = temp[:]
+            temp.clear()
+    if (len(temp) > len(rez)):
+        rez = temp[:]
+    return rez
+
+def test_get_longest_all_perfect_squares():
+    assert get_longest_all_perfect_squares([16, 4, 36, 21, 57]) == [16, 4, 36]
+    assert get_longest_all_perfect_squares([74, 48, 81, 9, 64, 49]) == [81, 9, 64, 49]
+
+test_get_longest_all_perfect_squares()
 
 
 def show_menu():
@@ -79,9 +106,10 @@ def show_menu():
     '''
     print('''
     1. Citire date.
-    2. Determinare cea mai lungă subsecvență cu proprietatea 1.
-    3. Determinare cea mai lungă subsecvență cu proprietatea 2.
-    4. Ieșire.
+    2. Determinare cea mai lungă subsecvență cu proprietatea 1: Toate numerele sunt pare.
+    3. Determinare cea mai lungă subsecvență cu proprietatea 2: Toate numerele sunt în progresie aritmetică.
+    4. Determinare cea mai lungă subsecvență cu proprietatea 3: Toate numerele sunt patrate perfecte.
+    5. Ieșire.
     ''')
 
 def main():
@@ -95,8 +123,12 @@ def main():
             rez = get_longest_all_even(lst)
             print(rez)
         elif cmd == '3':
-            pass
+            rez = get_longest_arithmetic_progression(lst)
+            print(rez)
         elif cmd == '4':
+            rez = get_longest_all_perfect_squares(lst)
+            print(rez)
+        elif cmd == '5':
             break
         else:
             print("Invalid command")
